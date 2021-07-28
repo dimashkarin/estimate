@@ -25,10 +25,12 @@ public class AuthController {
     @PostMapping(path = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
     User getAuthUser() {
+
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth == null) {
             return null;
         }
+
         Object principal = auth.getPrincipal();
         User user = (principal instanceof User) ? (User) principal : null;
         return Objects.nonNull(user) ? this.service.getByLogin(user.getLogin()) : null;
